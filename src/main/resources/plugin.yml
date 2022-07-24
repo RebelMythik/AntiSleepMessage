@@ -1,0 +1,6 @@
+name: AntiSleepMessage
+version: '${project.version}'
+main: rebelmythik.antisleepmessage.AntiSleepMessage
+api-version: 1.19
+depend: [ ProtocolLib ]
+authors: [ RebelMythik ]
