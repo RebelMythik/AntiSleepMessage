@@ -25,16 +25,16 @@ public final class AntiSleepMessage extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        ProtocolManager manager = ProtocolLibrary.getProtocolManager();
-        manager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Server.CHAT) {
+        ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
+        protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Server.CHAT) {
             @Override
-            public void onPacketReceiving(PacketEvent event) {
-                if(event.getPacket().equals(PacketType.Play.Server.CHAT)) {
-                    PacketContainer packet = event.getPacket();
+            public void onPacketSending(PacketEvent e) {
+                if (e.getPacketType().equals(PacketType.Play.Server.CHAT)) {
+                    PacketContainer packet = e.getPacket();
                     List<WrappedChatComponent> components = packet.getChatComponents().getValues();
                     for (WrappedChatComponent component : components) {
-                        if (component.getJson().contains("\"translate\":\"sleep.players_sleeping\"")) {
-                            event.setCancelled(true);
+                        if (component.getJson().contains("\"translate\":\"sleep.players_sleeping")) {
+                            e.setCancelled(true);
                             return;
                         }
                     }
