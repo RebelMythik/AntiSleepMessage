@@ -32,13 +32,14 @@ public final class AntiSleepMessage extends JavaPlugin {
                 if(event.getPacket().equals(PacketType.Play.Server.CHAT)) {
                     PacketContainer packet = event.getPacket();
                     List<WrappedChatComponent> components = packet.getChatComponents().getValues();
-                    for (WrappedChatComponent component :components) {
-                        if (component.toString().contains("players sleeping"));
-                        event.setCancelled(true);
-                        return;
-                    }
+                    for (WrappedChatComponent component : components) {
+                        if (component.getJson().contains("\"translate\":\"sleep.players_sleeping\"")) {
+                            event.setCancelled(true);
+                            return;
+                        }
                     }
                 }
+            }
         });
     }
 
